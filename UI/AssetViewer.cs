@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -11,15 +12,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace _21008763_COMP3404_Program
 {
     public partial class AssetViewer : Form
     {
-        private readonly IServer server;
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private readonly IServer _server;
         public AssetViewer(IServer server)
         {
             InitializeComponent();
-            this.server = server;
+            this._server = server;
 
             selectedImage.SizeMode = PictureBoxSizeMode.Zoom;
 
@@ -35,12 +38,19 @@ namespace _21008763_COMP3404_Program
         /// <param name="e">Brings in different event argument types capabale of the object</param>
         private void addImagesBtn_Click(object sender, EventArgs e)
         {
-            bool saveImages = saveImageChbx.Checked;
+            var saveImages = saveImageChbx.Checked;
 
             //Is it better to call FileDialogManager class directly or go through Server?
             FileDialogManager fileDialogManeger = new FileDialogManager();
-
-            server.Load(fileDialogManeger.FileDialog(saveImages));
+            try
+            {
+                _server.Load(fileDialogManeger.FileDialog(saveImages));
+            }
+            catch (System.Exception exc)
+            {
+                Logger.Fatal("Image(s) could not be loaded!");
+                MessageBox.Show($"There wan an error: {exc}", "Error loading images!");
+            }
             PopulateComboBox();
         }
 
@@ -51,7 +61,7 @@ namespace _21008763_COMP3404_Program
         {
             string chosenImageName = imageDropDown.SelectedItem?.ToString();
 
-            Image chosenImage = server.GetImage(chosenImageName, 1000, 1000);
+            Image chosenImage = _server.GetImage(chosenImageName, 1000, 1000);
             selectedImage.Image = chosenImage;
         }
         /// <summary>
@@ -59,10 +69,10 @@ namespace _21008763_COMP3404_Program
         /// </summary>
         private void PopulateComboBox()
         {
-            TomsLogger.Log(LogType.Log, "ComboBox populated!", GetType().Name, MethodBase.GetCurrentMethod());
+            Logger.Info("ComboBox populated!");
             //Clear all of the available images before adding the updated list
             imageDropDown.Items.Clear();
-            imageDropDown.Items.AddRange(server.ComboBox().ToArray());
+            imageDropDown.Items.AddRange(_server.ComboBox().ToArray());
         }
     }
 }

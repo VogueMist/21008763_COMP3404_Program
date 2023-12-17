@@ -33,8 +33,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>packages\NLog.5.2.7\lib\net46\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,19 +51,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssetViewer.cs">
+    <Compile Include="UI\AssetViewer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AssetViewer.Designer.cs">
+    <Compile Include="UI\AssetViewer.Designer.cs">
       <DependentUpon>AssetViewer.cs</DependentUpon>
     </Compile>
-    <Compile Include="FileDialogManager.cs" />
-    <Compile Include="IServer.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Utility\FileDialogManager.cs" />
+    <Compile Include="Server\IServer.cs" />
+    <Compile Include="Utility\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Server.cs" />
-    <Compile Include="TomsLogger.cs" />
-    <EmbeddedResource Include="AssetViewer.resx">
+    <Compile Include="Server\Server.cs" />
+    <Compile Include="Utility\TomsLogger.cs" />
+    <EmbeddedResource Include="UI\AssetViewer.resx">
       <DependentUpon>AssetViewer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -70,6 +75,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -82,6 +88,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="NLog.config.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

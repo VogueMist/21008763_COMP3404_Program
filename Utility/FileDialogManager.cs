@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -10,9 +11,9 @@ namespace _21008763_COMP3404_Program
 {
     public class FileDialogManager
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         public IList<string> FileDialog(bool save)
         {
-
             using (OpenFileDialog openDialog = new OpenFileDialog())
             {
                 openDialog.Multiselect = true;
@@ -20,7 +21,7 @@ namespace _21008763_COMP3404_Program
 
                 if (openDialog.ShowDialog() == DialogResult.OK)
                 {
-                    TomsLogger.Log(LogType.Log, "User imported some images", GetType().Name, MethodBase.GetCurrentMethod());
+                    Logger.Info("User imported some images");
                     IList<string> selectedPaths = openDialog.FileNames.ToList();
 
                     
@@ -29,7 +30,7 @@ namespace _21008763_COMP3404_Program
                 }
                 else
                 {
-                    TomsLogger.Log(LogType.Warning, "User did not choose images in file dialog", GetType().Name, MethodBase.GetCurrentMethod());
+                    Logger.Warn("User did not choose images in file dialog");
                     MessageBox.Show("You did not select any images to add!");
                     return null;
                 }
