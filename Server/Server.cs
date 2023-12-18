@@ -26,48 +26,42 @@ namespace _21008763_COMP3404_Program
             //Runs the inital collection of images to add to dictionary
             LoadDefaultImages();
         }
-
-        /// <summary>
-        /// METHOD to load the default images found in the Assets folder of the project - This just adds them to the dictionary ready for when the PopulateComboBox method is called in AssetViwer.cs
-        /// </summary>
         public void LoadDefaultImages()
         {
-            string[] defaultFilePaths = Directory.GetFiles("Assets", "*.png");
+            string[] defaultFilePaths = Directory.GetFiles("Assets");
             foreach (string filePath in defaultFilePaths)
             {
-                //Adds image to the dictionary, using the fileName as the pUid and actual image from the filepath
-                _imageStore.Add(Path.GetFileName(filePath), Image.FromFile(filePath));
+                try
+                {
+                    // Adds image to the dictionary, using the fileName as the pUid and actual image from the filepath
+                    _imageStore.Add(Path.GetFileName(filePath), Image.FromFile(filePath));
+                }
+                catch
+                {
+                    MessageBox.Show($"{Path.GetFileName(filePath)} - Invalid file type in the asset folder - This has been skipped", "Skipping wrong file type");
+                }
             }
         }
-
-        /// <summary>
-        /// METHOD that returns the values in the _imageStore dictionary for the ComboBox to populate
-        /// </summary>
-        /// <returns>The Dictionary called _imageStore</returns>
         public IList<string> ComboBox()
         {
-            return new List<string>(_imageStore.Keys); 
+            return new List<string>(_imageStore.Keys);
         }
-
-        /// <summary>
-        /// METHOD to load a new image or multiple images into the dictionary. This includes a feature to save the image added to the Assets folder
-        /// </summary>
-        /// <param name="pPathfilenames">The file paths for each image selected in the fileDialog</param>
-        /// <returns>Returns the uniqueIdentifiers to alert the users what images were added</returns>
         public IList<string> Load(IList<string> pPathfilenames)
         {
             List<string> uniqueIdentifiers = new List<string>();
             List<string> duplicateImages = new List<string>();
-                foreach (string filePath in pPathfilenames) 
+            if (pPathfilenames != null)
+            {
+                foreach (string filePath in pPathfilenames)
                 {
                     //Check if each image has already been added to the Dictionary imageStore
                     if (!_imageStore.ContainsKey(Path.GetFileName(filePath)))
                     {
-                    //Grabs a copy of the actual image from the file path
+                        //Grabs a copy of the actual image from the file path
                         Image image = Image.FromFile(filePath);
-                    //Adds the image to the dictionary using its file name and image data
+                        //Adds the image to the dictionary using its file name and image data
                         _imageStore.Add(Path.GetFileName(filePath), image);
-                    //Adds the file name to uniqueIdentifiers list to return to user later
+                        //Adds the file name to uniqueIdentifiers list to return to user later
                         uniqueIdentifiers.Add(Path.GetFileName(filePath));
                     }
                     else
@@ -76,25 +70,22 @@ namespace _21008763_COMP3404_Program
                         duplicateImages.Add(Path.GetFileName(filePath));
                     }
                 }
-                if (duplicateImages.Count > 0)
-                {
+            }
+            else
+            {
+                MessageBox.Show("You did not select any images to add!");
+            }
+            if (duplicateImages.Count > 0)
+            {
                 //STRING which holds the duplicate warning message for the user
-                    string duplicateWarning = "These images are already in the gallery:\n";
+                string duplicateWarning = "These images are already in the gallery:\n";
                 //Using string.Join goes through each element in the duplicateImages list and adds it to the original string message
-                    duplicateWarning += string.Join("\n", duplicateImages);
+                duplicateWarning += string.Join("\n", duplicateImages);
                 //Display the duplicate images added in a message box informing the user
-                    MessageBox.Show(duplicateWarning, "Duplicate images added!");
-                }
-                return uniqueIdentifiers;
-         }
-
-        /// <summary>
-        /// METHOD to request a copy of the image specified by 'pUid', scaled according to the dimensions given by pFrameWidth and pFrameHeight.
-        /// </summary>
-        /// <param name="pUid">the unique identifier for the image requested</param>
-        /// <param name="pFrameWidth">the width (in pixels) of the 'frame' it is to occupy</param>
-        /// <param name="pFrameHeight">the height (in pixles) of the 'frame' it is to occupy</param>
-        /// <returns>the Image identified by pUid</returns>
+                MessageBox.Show(duplicateWarning, "Duplicate images added!");
+            }
+            return uniqueIdentifiers;
+        }
         public Image GetImage(string pUid, int pFrameWidth, int pFrameHeight)
         {
             if (_imageStore.ContainsKey(pUid))

@@ -1,4 +1,6 @@
-﻿using System;
+﻿//Author - Brad
+//Edited by - Tom 21008763
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -17,8 +19,15 @@ namespace _21008763_COMP3404_Program
         /// <returns>the unique identifiers of the images that have been loaded</returns>
         IList<String> Load(IList<String> pPathfilenames);
 
+        /// <summary>
+        /// METHOD to load the default images found in the Assets folder of the project - This just adds them to the dictionary ready for when the PopulateComboBox method is called in AssetViwer.cs
+        /// </summary>
         void LoadDefaultImages();
 
+        /// <summary>
+        /// METHOD that returns the values in the _imageStore dictionary for the ComboBox to populate
+        /// </summary>
+        /// <returns>The Dictionary keys (Filename of image)</returns>
         IList<string> ComboBox();
 
         /// <summary>

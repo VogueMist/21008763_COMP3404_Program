@@ -1,4 +1,5 @@
-﻿using NLog;
+﻿//Author - Tom 21008763
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -25,14 +26,11 @@ namespace _21008763_COMP3404_Program
         {
             InitializeComponent();
             this._server = server;
-
+            // Set user infor textbox to read only so user cannot write text or edit it
+            userInfoTxtBx.ReadOnly = false;
             selectedImage.SizeMode = PictureBoxSizeMode.Zoom;
-
-
-           // selectedImage.Visible = false;
             PopulateComboBox();
         }
-
         /// <summary>
         /// Method handling when the add images button is clicked, will open file explorer to select image(s)
         /// </summary>
@@ -40,17 +38,22 @@ namespace _21008763_COMP3404_Program
         /// <param name="e">Brings in different event argument types capabale of the object</param>
         private void addImagesBtn_Click(object sender, EventArgs e)
         {
+            // See if the user checked the box to save images locally or not --REMOVE? Not on requirements
             var saveImages = saveImageChbx.Checked;
-
             //Is it better to call FileDialogManager class directly or go through Server?
             FileDialogManager fileDialogManeger = new FileDialogManager();
             try
             {
+                // Create the string used to inform the user of which images were added to the dictionary
                 string imagesAdded = "Recently added:\n";
                 IList<string> imageUids = new List<string>();
                 imageUids = _server.Load(fileDialogManeger.FileDialog(saveImages));
                 imagesAdded += string.Join("\n", imageUids);
-                richTextBox1.Text = imagesAdded;
+                // Set readonly to false so changes can be made to the textbox
+                userInfoTxtBx.ReadOnly = false;
+                userInfoTxtBx.Text = imagesAdded;
+                // Set readonly to true again so the user cannot make edits
+                userInfoTxtBx.ReadOnly = true;
             }
             catch (Exception exc)
             {
@@ -63,6 +66,8 @@ namespace _21008763_COMP3404_Program
         /// <summary>
         /// METHOD to handle when an image is selected in the combobox
         /// </summary>
+        /// <param name="sender">The object which triggered the event</param>
+        /// <param name="e">Brings in different event argument types capabale of the object</param>
         private void imageDropDown_Select(object sender, EventArgs e)
         {
             string chosenImageName = imageDropDown.SelectedItem?.ToString();

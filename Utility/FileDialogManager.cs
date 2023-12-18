@@ -1,4 +1,5 @@
-﻿using NLog;
+﻿//Author - Tom 21008763
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +29,6 @@ namespace _21008763_COMP3404_Program
                 else
                 {
                     Logger.Warn("User did not choose images in file dialog");
-                    MessageBox.Show("You did not select any images to add!");
                     return null;
                 }
             }
