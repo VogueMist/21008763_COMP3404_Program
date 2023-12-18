@@ -32,6 +32,7 @@
             this.addImagesBtn = new System.Windows.Forms.Button();
             this.imageDropDown = new System.Windows.Forms.ComboBox();
             this.saveImageChbx = new System.Windows.Forms.CheckBox();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.selectedImage)).BeginInit();
             this.SuspendLayout();
             // 
@@ -56,7 +57,7 @@
             // imageDropDown
             // 
             this.imageDropDown.FormattingEnabled = true;
-            this.imageDropDown.Location = new System.Drawing.Point(2, 204);
+            this.imageDropDown.Location = new System.Drawing.Point(12, 12);
             this.imageDropDown.Name = "imageDropDown";
             this.imageDropDown.Size = new System.Drawing.Size(208, 21);
             this.imageDropDown.TabIndex = 3;
@@ -72,11 +73,20 @@
             this.saveImageChbx.Text = "Save Image?";
             this.saveImageChbx.UseVisualStyleBackColor = true;
             // 
+            // richTextBox1
+            // 
+            this.richTextBox1.Location = new System.Drawing.Point(12, 158);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(223, 307);
+            this.richTextBox1.TabIndex = 5;
+            this.richTextBox1.Text = "";
+            // 
             // AssetViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1027, 482);
+            this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.saveImageChbx);
             this.Controls.Add(this.imageDropDown);
             this.Controls.Add(this.addImagesBtn);
@@ -94,6 +104,7 @@
         private System.Windows.Forms.Button addImagesBtn;
         private System.Windows.Forms.ComboBox imageDropDown;
         private System.Windows.Forms.CheckBox saveImageChbx;
+        private System.Windows.Forms.RichTextBox richTextBox1;
     }
 }
 

@@ -23,9 +23,6 @@ namespace _21008763_COMP3404_Program
                 {
                     Logger.Info("User imported some images");
                     IList<string> selectedPaths = openDialog.FileNames.ToList();
-
-                    
-
                     return selectedPaths;
                 }
                 else

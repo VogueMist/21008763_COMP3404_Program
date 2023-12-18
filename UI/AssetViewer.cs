@@ -14,7 +14,9 @@ using System.Windows.Forms;
 
 
 namespace _21008763_COMP3404_Program
-{
+{/// <summary>
+/// CLASS for the main AssetViewer form handles the form functions only - Data is taken through the Server Class
+/// </summary>
     public partial class AssetViewer : Form
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
@@ -44,7 +46,11 @@ namespace _21008763_COMP3404_Program
             FileDialogManager fileDialogManeger = new FileDialogManager();
             try
             {
-                _server.Load(fileDialogManeger.FileDialog(saveImages));
+                string imagesAdded = "Recently added:\n";
+                IList<string> imageUids = new List<string>();
+                imageUids = _server.Load(fileDialogManeger.FileDialog(saveImages));
+                imagesAdded += string.Join("\n", imageUids);
+                richTextBox1.Text = imagesAdded;
             }
             catch (System.Exception exc)
             {
@@ -55,17 +61,17 @@ namespace _21008763_COMP3404_Program
         }
 
         /// <summary>
-        /// Method to handle when an image is selected in the combobox
+        /// METHOD to handle when an image is selected in the combobox
         /// </summary>
         private void imageDropDown_Select(object sender, EventArgs e)
         {
             string chosenImageName = imageDropDown.SelectedItem?.ToString();
 
-            Image chosenImage = _server.GetImage(chosenImageName, 1000, 1000);
+            Image chosenImage = _server.GetImage(chosenImageName, selectedImage.Width, selectedImage.Height);
             selectedImage.Image = chosenImage;
         }
         /// <summary>
-        /// Populates the ComboBox with the list of image file paths
+        /// METHOD which populates the ComboBox with the list of image file paths
         /// </summary>
         private void PopulateComboBox()
         {
