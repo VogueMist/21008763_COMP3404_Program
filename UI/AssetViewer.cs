@@ -52,7 +52,7 @@ namespace _21008763_COMP3404_Program
                 imagesAdded += string.Join("\n", imageUids);
                 richTextBox1.Text = imagesAdded;
             }
-            catch (System.Exception exc)
+            catch (Exception exc)
             {
                 Logger.Fatal("Image(s) could not be loaded!");
                 MessageBox.Show($"There wan an error: {exc}", "Error loading images!");
