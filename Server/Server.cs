@@ -48,41 +48,58 @@ namespace _21008763_COMP3404_Program
         }
         public IList<string> Load(IList<string> pPathfilenames)
         {
+            //Holds uniqueIdentifies to be returned to the main form to show the user which images were added to the dictionary
             List<string> uniqueIdentifiers = new List<string>();
-            List<string> duplicateImages = new List<string>();
+            //Holds images which were not added to the dictionary so the user can be alerted
+            List<string> imagesNotAdded = new List<string>();
             if (pPathfilenames != null)
             {
                 foreach (string filePath in pPathfilenames)
                 {
-                    //Check if each image has already been added to the Dictionary imageStore
-                    if (!_imageStore.ContainsKey(Path.GetFileName(filePath)))
+                    try
                     {
-                        //Grabs a copy of the actual image from the file path
-                        Image image = Image.FromFile(filePath);
-                        //Adds the image to the dictionary using its file name and image data
-                        _imageStore.Add(Path.GetFileName(filePath), image);
-                        //Adds the file name to uniqueIdentifiers list to return to user later
-                        uniqueIdentifiers.Add(Path.GetFileName(filePath));
-                    }
-                    else
+                        //Check if each image has already been added to the Dictionary imageStore
+                        if (!_imageStore.ContainsKey(Path.GetFileName(filePath)))
+                        {
+                            //Grabs a copy of the actual image from the file path
+                            Image image = Image.FromFile(filePath);
+                            //Adds the image to the dictionary using its file name and image data
+                            _imageStore.Add(Path.GetFileName(filePath), image);
+                            //Adds the file name to uniqueIdentifiers list to return to user later
+                            uniqueIdentifiers.Add(Path.GetFileName(filePath));
+                        }
+                        else
+                        {
+                            //If image is a duplicate add it to list to tell user later
+                            imagesNotAdded.Add($"Duplicate - {Path.GetFileName(filePath)}");
+                        }
+                    }//Catch the error when files that are not images are added
+                    catch (OutOfMemoryException)
                     {
-                        //If image is a duplicate add it to list to tell user later
-                        duplicateImages.Add(Path.GetFileName(filePath));
+                        //Add the file which is not an image to the imagesNotAdded list
+                        imagesNotAdded.Add($"Not an image file - {Path.GetFileName(filePath)}");
+                        //Continue past this file and skip it to miss the error
+                        continue;
+                        //Catch the error if the file can not be found
+                    }catch (FileNotFoundException)
+                    {
+                        imagesNotAdded.Add($"File was not found! - {Path.GetFileName(filePath)}");
                     }
                 }
             }
+
             else
             {
                 MessageBox.Show("You did not select any images to add!");
             }
-            if (duplicateImages.Count > 0)
+            if (imagesNotAdded.Count > 0)
             {
                 //STRING which holds the duplicate warning message for the user
-                string duplicateWarning = "These images are already in the gallery:\n";
+                string missingImagesWarning = "The images could not be added:\n";
                 //Using string.Join goes through each element in the duplicateImages list and adds it to the original string message
-                duplicateWarning += string.Join("\n", duplicateImages);
+                missingImagesWarning += string.Join("\n", imagesNotAdded);
                 //Display the duplicate images added in a message box informing the user
-                MessageBox.Show(duplicateWarning, "Duplicate images added!");
+                MessageBox.Show(missingImagesWarning, "Some images weren't added");
             }
             return uniqueIdentifiers;
         }
