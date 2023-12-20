@@ -29,6 +29,7 @@ namespace _21008763_COMP3404_Program
         public void LoadDefaultImages()
         {
             string[] defaultFilePaths = Directory.GetFiles("Assets");
+            //What if folder is missing? - NEEDS ADDING -
             foreach (string filePath in defaultFilePaths)
             {
                 try
