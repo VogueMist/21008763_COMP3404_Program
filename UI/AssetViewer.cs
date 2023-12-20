@@ -2,17 +2,9 @@
 using NLog;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Drawing.Design;
-using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-
 
 namespace _21008763_COMP3404_Program
 {/// <summary>
@@ -29,7 +21,6 @@ namespace _21008763_COMP3404_Program
             this._server = server;
             // Set user infor textbox to read only so user cannot write text or edit it
             userInfoTxtBx.ReadOnly = false;
-            selectedImage.SizeMode = PictureBoxSizeMode.Zoom;
             PopulateComboBox();
         }
         /// <summary>
@@ -61,7 +52,6 @@ namespace _21008763_COMP3404_Program
             }
             PopulateComboBox();
         }
-
         /// <summary>
         /// METHOD to handle when an image is selected in the combobox
         /// </summary>

@@ -3,10 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Reflection;
 using NLog;
 using System.Windows.Forms;
 
@@ -82,13 +78,13 @@ namespace _21008763_COMP3404_Program
                         //Continue past this file and skip it to miss the error
                         continue;
                         //Catch the error if the file can not be found
-                    }catch (FileNotFoundException)
+                    }
+                    catch (FileNotFoundException)
                     {
                         imagesNotAdded.Add($"File was not found! - {Path.GetFileName(filePath)}");
                     }
                 }
             }
-
             else
             {
                 MessageBox.Show("You did not select any images to add!");
@@ -108,10 +104,19 @@ namespace _21008763_COMP3404_Program
         {
             if (_imageStore.ContainsKey(pUid))
             {
+                //Instantiate image class to hold original image
                 Image originalImage = _imageStore[pUid];
-                // Add scaling to image, how is that going to work? --TODO
+                //Instantiate a Bitmap which can be drawn on by the DrawImage method in the Graphics C# class
+                Bitmap scaledImage = new Bitmap(pFrameWidth, pFrameHeight);
+                //Code inspired from https://stackoverflow.com/questions/3884860/drawing-image-to-bigger-bitmap - With minor adjustment to fit the project
+                //Use Graphics class to be able to draw the image on the Bitmap
+                using (Graphics graphics = Graphics.FromImage(scaledImage))
+                {
+                    //Draw the image on the Bitmap with the sizes passed in from the AssetViewer picturebox
+                    graphics.DrawImage(originalImage, 0, 0, pFrameWidth, pFrameHeight);
+                }
                 Logger.Info($"Image displayed: {pUid}");
-                return originalImage;
+                return scaledImage;
             }
             else
             {
