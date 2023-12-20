@@ -31,7 +31,6 @@
             this.selectedImage = new System.Windows.Forms.PictureBox();
             this.addImagesBtn = new System.Windows.Forms.Button();
             this.imageDropDown = new System.Windows.Forms.ComboBox();
-            this.saveImageChbx = new System.Windows.Forms.CheckBox();
             this.userInfoTxtBx = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.selectedImage)).BeginInit();
             this.SuspendLayout();
@@ -63,16 +62,6 @@
             this.imageDropDown.TabIndex = 3;
             this.imageDropDown.DropDownClosed += new System.EventHandler(this.imageDropDown_Select);
             // 
-            // saveImageChbx
-            // 
-            this.saveImageChbx.AutoSize = true;
-            this.saveImageChbx.Location = new System.Drawing.Point(875, 158);
-            this.saveImageChbx.Name = "saveImageChbx";
-            this.saveImageChbx.Size = new System.Drawing.Size(89, 17);
-            this.saveImageChbx.TabIndex = 4;
-            this.saveImageChbx.Text = "Save Image?";
-            this.saveImageChbx.UseVisualStyleBackColor = true;
-            // 
             // userInfoTxtBx
             // 
             this.userInfoTxtBx.Location = new System.Drawing.Point(12, 158);
@@ -87,7 +76,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1027, 482);
             this.Controls.Add(this.userInfoTxtBx);
-            this.Controls.Add(this.saveImageChbx);
             this.Controls.Add(this.imageDropDown);
             this.Controls.Add(this.addImagesBtn);
             this.Controls.Add(this.selectedImage);
@@ -95,7 +83,6 @@
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.selectedImage)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -103,7 +90,6 @@
         private System.Windows.Forms.PictureBox selectedImage;
         private System.Windows.Forms.Button addImagesBtn;
         private System.Windows.Forms.ComboBox imageDropDown;
-        private System.Windows.Forms.CheckBox saveImageChbx;
         private System.Windows.Forms.RichTextBox userInfoTxtBx;
     }
 }

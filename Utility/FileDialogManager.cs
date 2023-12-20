@@ -13,7 +13,7 @@ namespace _21008763_COMP3404_Program
     public class FileDialogManager
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        public IList<string> FileDialog(bool save)
+        public IList<string> FileDialog()
         {
             using (OpenFileDialog openDialog = new OpenFileDialog())
             {

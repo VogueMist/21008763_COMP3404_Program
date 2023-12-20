@@ -21,6 +21,7 @@ namespace _21008763_COMP3404_Program
     public partial class AssetViewer : Form
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        //Readonly stating that its value cannot be changed from this class
         private readonly IServer _server;
         public AssetViewer(IServer server)
         {
@@ -38,16 +39,14 @@ namespace _21008763_COMP3404_Program
         /// <param name="e">Brings in different event argument types capabale of the object</param>
         private void addImagesBtn_Click(object sender, EventArgs e)
         {
-            // See if the user checked the box to save images locally or not --REMOVE? Not on requirements
-            var saveImages = saveImageChbx.Checked;
             //Is it better to call FileDialogManager class directly or go through Server?
-            FileDialogManager fileDialogManeger = new FileDialogManager();
+            FileDialogManager fileDialogManager = new FileDialogManager();
             try
             {
                 // Create the string used to inform the user of which images were added to the dictionary
                 string imagesAdded = "Recently added:\n";
                 IList<string> imageUids = new List<string>();
-                imageUids = _server.Load(fileDialogManeger.FileDialog(saveImages));
+                imageUids = _server.Load(fileDialogManager.FileDialog());
                 imagesAdded += string.Join("\n", imageUids);
                 // Set readonly to false so changes can be made to the textbox
                 userInfoTxtBx.ReadOnly = false;
